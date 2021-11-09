@@ -1,7 +1,7 @@
 import face_recognition as fr
 from os import listdir
 import openpyxl
-#import cv2
+import cv2
 
 list_name_img = list(filter(lambda x: x.endswith('.jpg'), listdir())) #чтение файлов .jpg
 
