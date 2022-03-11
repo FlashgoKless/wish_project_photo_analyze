@@ -1,15 +1,10 @@
 import pandas as pd
 import openpyxl
-from sklearn.ensemble import RandomForestRegressor,RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
-from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
-from os import listdir
-import cmake
-import dlib
-import cv2
+from sklearn.model_selection import train_test_split
 import face_recognition as fr
 import PySimpleGUI as sg
-
 
 layout = [  [sg.Text('Путь до фотографии:')],
             [sg.Input(), sg.FileBrowse()],
@@ -68,7 +63,31 @@ r_sq = model.score(X_train, y_train)
 
 example_df = pd.DataFrame(example)
 
-sg.popup('Ваша оценка', model.predict(example)[0])
+if (model.predict(example)[0] >= 6) and (model.predict(example)[0] < 7.2):
+    result = 10
+elif (model.predict(example)[0] >= 5.5) and (model.predict(example)[0] < 6):
+    result = 9
+elif (model.predict(example)[0] >= 5.4) and (model.predict(example)[0] < 5.5):
+    result = 8
+elif (model.predict(example)[0] >= 5.3) and (model.predict(example)[0] < 5.4):
+    result = 7
+elif (model.predict(example)[0] >= 5.2) and (model.predict(example)[0] < 5.3):
+    result = 6
+elif (model.predict(example)[0] >= 5.06) and (model.predict(example)[0] < 5.2):
+    result = 5
+elif (model.predict(example)[0] < 5.06) and (model.predict(example)[0] >= 4.80):
+    result = 4
+elif (model.predict(example)[0] < 4.80) and (model.predict(example)[0] >= 4.55):
+    result = 3
+elif (model.predict(example)[0] < 4.55) and (model.predict(example)[0] >= 4):
+    result = 2
+elif model.predict(example)[0] < 4:
+    result = 1
+
+
+sg.popup('Ваша оценка степени доверия:', result)
+
+print("Техническая оценка: ", model.predict(example)[0])
 
 '''
 print('---------------------------------------------------------------------------------------|')
